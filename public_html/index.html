@@ -28,6 +28,7 @@ and open the template in the editor.
             mainDiv.style.width = "80%";
             mainDiv.style.margin = "auto";
             mainDiv.style.backgroundColor = "#496ba0";
+            mainDiv.style.lineHeight = "0px";
             var imageList = ["images", "more images later"];
             function collageFramework(){
                 var collage = {};
@@ -40,8 +41,10 @@ and open the template in the editor.
                     var imageNames = params.imageNames;
                     var rowLength = params.rowLength;
                     var colLength = boxArray.length;
-                    var boxWidth = (parseInt(parentDIV.style.height)) / colLength;
-                    var boxHeight = (parseInt(parentDIV.style.width)) / rowLength;
+//                    var boxWidth = (parseInt(parentDIV.style.height)) / colLength;
+//                    var boxHeight = (parseInt(parentDIV.style.width)) / rowLength;
+                    var boxHeight = Math.floor(100 / colLength);
+                    var boxWidth = Math.floor(100 / rowLength);
                     console.log("Width of an individual box: " + boxWidth +
                             "\nHeight of an individual box: " + boxHeight);
                     for(var i = 0; i < colLength; i++){
@@ -56,10 +59,14 @@ and open the template in the editor.
                         var box = document.createElement("div");
                         box.style.height = boxHeight + "%";
                         box.style.width = boxWidth + "%";
-                        box.style.borderWidth = "2px";
+                        box.style.borderStyle = "solid";
+                        box.style.borderWidth = "1px";
+                        box.style.borderColor = "red";
+                        box.style.display= "inline-block";
                         box.style.zIndex = 1;
                         box.style.backgroundColor = "white";
-                        box.style.position = "relative";
+                        box.style.margin = "0px";
+//                        box.style.position = "relative";
                         box.style.top = params.divYlocation + "%";  
                         box.style.left = params.divXlocation + "%";
                         box.style.width = params.width + "%";
@@ -75,7 +82,7 @@ and open the template in the editor.
                             var currentVal = boxArray[i][0];
                             divWidth = 0;
                             Yval += boxHeight;
-                            for(var j = 0; j < rowLength-1; j++){
+                            for(var j = 0; j <= rowLength-1; j++){
                                 divWidth += boxWidth;
                                 Xval += boxWidth;
                                 if(boxArray[i][j+1] !== currentVal){
@@ -84,6 +91,8 @@ and open the template in the editor.
                                         divXlocation: Xval,
                                         divYlocation: Yval 
                                    });
+                                   currentVal = boxArray[i][j+1];
+                                   divWidth = 0;
                                 }
                             }
                         }
@@ -94,15 +103,15 @@ and open the template in the editor.
                 return collage;
             }
 //  
-//            var collageDrawing = [[1,1,1,0,0,0,1,1,1],
-//                                  [1,1,0,0,0,0,1,1,1],
-//                                  [0,0,1,1,1,1,1,0,0]];
-            var collageDrawing = [[1,1],
-                                  [0,0]];
+            var collageDrawing = [[1,1,1,0,0,0,1,1,1],
+                                  [1,0,1,0,0,0,0,0,0],
+                                  [0,1,1,1,1,1,1,0,0]];
+//            var collageDrawing = [[1,1],
+//                                  [0,0]];
   
             var collageFW = collageFramework();
             var collageA = collageFW.makeCollage({
-                parent: mainDIV,
+                parent: mainDiv,
                 boxArray: collageDrawing,
                 boxWidth: 50,
                 boxHeight: 50,
