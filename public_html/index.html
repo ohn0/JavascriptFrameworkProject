@@ -30,35 +30,42 @@ and open the template in the editor.
             mainDiv.style.backgroundColor = "#496ba0";
             mainDiv.style.lineHeight = "0px";
             var imageList = ["images", "more images later"];
-            function collageFramework(){
+            function Framework(){
                 var collage = {};
                 collage.makeCollage = function(params){
                     var newCollage = {};
-    //                var boxWidth = params.boxWidth;
-    //                var boxHeight = params.boxHeight;
                     var boxArray = params.boxArray;
                     var parentDIV = params.parent;
-                    var imageNames = params.imageNames;
+                    var imageNames = params.imageNames || null;
                     var rowLength = params.rowLength;
-                    var colLength = boxArray.length;
-//                    var boxWidth = (parseInt(parentDIV.style.height)) / colLength;
-//                    var boxHeight = (parseInt(parentDIV.style.width)) / rowLength;
-                    var boxHeight = Math.floor(100 / colLength);
+                    var colLength = params.colLength;;
+                    var boxHeight = Math.ceil(100 / colLength);
                     var boxWidth = Math.floor(100 / rowLength);
+                    var divCount = 0;
+                    console.log("Parent div is called: " + parentDIV.id);
+                    var divList = [];
                     console.log("Width of an individual box: " + boxWidth +
                             "\nHeight of an individual box: " + boxHeight);
                     for(var i = 0; i < colLength; i++){
-                        if(boxArray[i].length !== rowLength){
-                            console.log("All the rows need to be the same length.");
+                        if(boxArray[i].length !== rowLength || boxArray.length !== colLength){
+                            alert("Number of rows/cols in array does not match "+
+                                  "number of rows/cols set as input.");
                             return null;
                         }
+                    }
+                    
+                    if(imageNames === null){
+                        alert("No images attached.");
                     }
 
                     function makeDiv(params){
                         console.log("Making a new div!");
                         var box = document.createElement("div");
+                        box.id = parentDIV.id + String(divCount);
+                        divCount++;
                         box.style.height = boxHeight + "%";
                         box.style.width = boxWidth + "%";
+                        box.style.boxSizing = "border-box";
                         box.style.borderStyle = "solid";
                         box.style.borderWidth = "1px";
                         box.style.borderColor = "red";
@@ -66,12 +73,13 @@ and open the template in the editor.
                         box.style.zIndex = 1;
                         box.style.backgroundColor = "white";
                         box.style.margin = "0px";
-//                        box.style.position = "relative";
                         box.style.top = params.divYlocation + "%";  
                         box.style.left = params.divXlocation + "%";
                         box.style.width = params.width + "%";
-
+                        box.style.backgroundImage = imageNames[i % 
+                            (imageNames.length < )]
                         parentDIV.appendChild(box);
+                        divList.push(String(box.id));
                     }        
 
                     newCollage.makeBoxes = function(){
@@ -98,27 +106,64 @@ and open the template in the editor.
                         }
                         return null;
                     };
+                    
+                    newCollage.listBoxes = function(){
+                        for(var i = 0; i < divCount; i++){
+                            console.log(divList[i]);
+                        }
+                    };
+                    
+                    newCollage.boxCount = function(){
+                        return divList.length;
+                    };
+                    
+                    newCollage.getBox = function(boxIndex){
+                        if(boxIndex < divList.length){
+                            return divList[boxIndex];
+                        }
+                        else{
+                            alert("The box that you want to access does not exist.");
+                        }
+                    };
                     return newCollage;
                 };
                 return collage;
             }
-//  
-            var collageDrawing = [[1,1,1,0,0,0,1,1,1,0],
-                                  [1,0,1,0,1,0,1,0,1,0],
-                                  [0,1,1,1,1,1,1,0,0,0]];
-//            var collageDrawing = [[1,1],
-//                                  [0,0]];
   
-            var collageFW = collageFramework();
-            var collageA = collageFW.makeCollage({
+            var collageDrawing = [[1,1,1,1,1,1,1,1,1,1],
+                                  [1,1,1,0,1,1,0,1,1,1],
+                                  [1,1,1,1,1,1,1,1,1,1]];
+//            var collageDrawing = [[1,0],
+//                                  [0,1]];
+
+            var imageList = ['imgA.gif', 'imgB.jpg', 'imgC.png',
+                             'imgD.png', 'imgE.jpg', 'imgF.gif',
+                             'imgG.png', 'imgH.jpg', 'imgI.jpg',
+                             'imgJ.png', 'imgK.jpg'];
+            var FW = Framework();
+            var collageA = FW.makeCollage({
                 parent: mainDiv,
                 boxArray: collageDrawing,
                 boxWidth: 50,
                 boxHeight: 50,
                 imageNames: imageList,
-                rowLength: 10
+                rowLength: 10,
+                colLength: 3
             });
-            collageA.makeBoxes();
+            if(collageA !== null){
+                collageA.makeBoxes();
+                collageA.listBoxes();
+//                var box3 = collageA.getBox(3);
+//                my$(box3).style.backgroundColor = "cyan";
+//                console.log(collageA.rowLength);
+                var boxCountA = collageA.boxCount();
+                for(var i = 0; i < boxCountA; i++){
+                    my$(collageA.getBox(i)).style.backgroundColor = "rgb"+"(" + 
+                                        parseInt(Math.random() * 255) +", "
+                                        +parseInt(Math.random() * 255)+", "
+                                        +parseInt(Math.random() * 255)+")";
+                }
+            }
 
     
             
