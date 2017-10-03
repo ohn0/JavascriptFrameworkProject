@@ -1,14 +1,20 @@
 "use strict";
+function my$(id) {
+    return document.getElementById(id);
+}
+
 function Framework() {
-    var collage = {};
-    collage.makeCollage = function (params) {
+
+    
+    var FW = {};
+    FW.collageFW = function (params) {
         var newCollage = {};
         var boxArray = params.boxArray;
         var parentDIV = params.parent;
         var imageNames = params.imageNames || null;
         var rowLength = params.rowLength;
         var colLength = params.colLength;
-        ;
+        var defaultBorderValue = "black";
         var boxHeight = Math.ceil(100 / colLength);
         var boxWidth = Math.floor(100 / rowLength);
         var divCount = 0;
@@ -38,7 +44,7 @@ function Framework() {
             box.style.boxSizing = "border-box";
             box.style.borderStyle = "solid";
             box.style.borderWidth = "1px";
-            box.style.borderColor = "red";
+            box.style.borderColor = defaultBorderValue;
             box.style.display = "inline-block";
             box.style.zIndex = 1;
             box.style.backgroundColor = "white";
@@ -46,11 +52,11 @@ function Framework() {
             box.style.top = params.divYlocation + "%";
             box.style.left = params.divXlocation + "%";
             box.style.width = params.width + "%";
-//                        box.style.backgroundImage = "url("+imageNames[(divCount-1) % imageNames.length]+")";
             box.style.backgroundImage = "url(" + imageNames[Math.floor
                 (Math.random() * imageNames.length)] + ")";
-            box.style.backgroundSize = "100% 100%";
+            box.style.backgroundSize = "contain";
             box.style.backgroundRepeat = "no-repeat";
+            box.style.backgroundPosition = "center center";
             parentDIV.appendChild(box);
             divList.push(String(box.id));
         }
@@ -86,6 +92,17 @@ function Framework() {
             }
         };
 
+        newCollage.toggleBorder = function() {
+            for(var i = 0; i < divCount; i++){
+                if(my$(divList[i]).style.border !== "none"){
+                    my$(divList[i]).style.border = "none";
+                }
+                else{
+                    my$(divList[i]).style.border = defaultBorderValue;
+                }
+            }
+        };
+
         newCollage.boxCount = function () {
             return divList.length;
         };
@@ -96,9 +113,20 @@ function Framework() {
             }
             else {
                 alert("The box that you want to access does not exist.");
+                return null;
             }
         };
         return newCollage;
     };
-    return collage;
+    
+    FW.graphFW = function(params){
+        var newGraph = {};
+        var makeGraph = document.createElement('canvas');
+        
+        
+        
+        return newGraph;
+    };
+    
+    return FW;
 }

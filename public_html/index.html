@@ -20,9 +20,7 @@ and open the template in the editor.
         <script src="Framework.js"></script>
         <script>
             "use strict";
-            function my$(id) {
-                return document.getElementById(id);
-            }
+
 
             var mainDiv = my$("mainDIV");
             mainDiv.style.height = "80vh";
@@ -33,21 +31,25 @@ and open the template in the editor.
             var imageList = ["images", "more images later"];
 
 
-            var collageDrawing = [[1, 1, 1, 1, 1, 1, 0, 0, 1, 1],
-                [1, 1, 0, 0, 1, 1, 0, 0, 0, 0],
-                [1, 1, 1, 0, 1, 1, 0, 0, 1, 1]];
+            var collageDrawing = [[1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
+                                  [1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
+                                  [1, 1, 0, 0, 1, 1, 0, 0, 1, 1]];
 //            var collageDrawing = [[1,0],
 //                                  [0,1]];
 
             var imageList = ['imgA.gif', 'imgB.jpg', 'imgC.png',
                              'imgD.png', 'imgE.jpg', 'imgF.gif',
                              'imgG.png', 'imgH.jpg', 'imgI.jpg',
-                             'imgJ.png', 'imgK.jpg'];
+                             'imgJ.png', 'imgK.jpg', 'imgL.gif',
+                             '1430852764165.png', '1430947707287.gif',
+                             '1431140273524.png', '1432921371002.jpg',
+                             '1443593809949.png', '1443597085619.jpg',
+                             '1436311959052.gif', '1434898470451.jpg'];
             for (var i = 0; i < imageList.length; i++) {
                 imageList[i] = "pics/" + imageList[i];
             }
             var FW = Framework();
-            var collageA = FW.makeCollage({
+            var collageA = FW.collageFW({
                 parent: mainDiv,
                 boxArray: collageDrawing,
                 imageNames: imageList,
@@ -62,13 +64,14 @@ and open the template in the editor.
 //                console.log(collageA.rowLength);
                 var boxCountA = collageA.boxCount();
                 for (var i = 0; i < boxCountA; i++) {
-                    my$(collageA.getBox(i)).style.backgroundColor = "rgb" + "(" +
-                            parseInt(Math.random() * 255) + ", "
-                            + parseInt(Math.random() * 255) + ", "
-                            + parseInt(Math.random() * 255) + ")";
+//                    my$(collageA.getBox(i)).style.backgroundColor = "rgb" + "(" +
+//                            parseInt(Math.random() * 255) + ", "
+//                            + parseInt(Math.random() * 255) + ", "
+//                            + parseInt(Math.random() * 255) + ")";
                 }
-                my$(collageA.getBox(Math.floor(Math.random() * boxCountA))).
-                        style.backgroundImage = "none";
+//                my$(collageA.getBox(Math.floor(Math.random() * boxCountA))).
+//                        style.backgroundImage = "none";
+                collageA.toggleBorder();
             }
 
 
