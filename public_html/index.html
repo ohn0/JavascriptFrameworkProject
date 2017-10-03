@@ -17,6 +17,7 @@ and open the template in the editor.
     </head>
     <body>
         <div id="mainDIV"></div>
+        <div id="cloudDiv"></div>
         <script src="Framework.js"></script>
         <script>
             "use strict";
@@ -31,17 +32,17 @@ and open the template in the editor.
             var imageList = ["images", "more images later"];
 
 
-            var collageDrawing = [[1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
-                                  [1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
-                                  [1, 1, 0, 0, 1, 1, 0, 0, 1, 1]];
-//            var collageDrawing = [[1,0],
-//                                  [0,1]];
+//            var collageDrawing = [[1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
+//                                  [1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
+//                                  [1, 1, 0, 0, 1, 1, 0, 0, 1, 1]];
+            var collageDrawing = [[1, 0],
+                                  [1, 0]];
 
-            var imageList = ['imgA.gif', 'imgB.jpg', 'imgC.png',
-                             'imgD.png', 'imgE.jpg', 'imgF.gif',
-                             'imgG.png', 'imgH.jpg', 'imgI.jpg',
-                             'imgJ.png', 'imgK.jpg', 'imgL.gif',
-                             '1430852764165.png', '1430947707287.gif',
+//            var imageList = ['imgA.gif', 'imgB.jpg', 'imgC.png',
+//                             'imgD.png', 'imgE.jpg', 'imgF.gif',
+//                             'imgG.png', 'imgH.jpg', 'imgI.jpg',
+//                             'imgJ.png', 'imgK.jpg', 'imgL.gif',
+            var imageList = ['1430852764165.png', '1430947707287.gif',
                              '1431140273524.png', '1432921371002.jpg',
                              '1443593809949.png', '1443597085619.jpg',
                              '1436311959052.gif', '1434898470451.jpg'];
@@ -53,27 +54,22 @@ and open the template in the editor.
                 parent: mainDiv,
                 boxArray: collageDrawing,
                 imageNames: imageList,
-                rowLength: 10,
-                colLength: 3
+                rowLength: 2,
+                colLength: 2
             });
             if (collageA !== null) {
                 collageA.makeBoxes();
                 collageA.listBoxes();
-//                var box3 = collageA.getBox(3);
-//                my$(box3).style.backgroundColor = "cyan";
-//                console.log(collageA.rowLength);
                 var boxCountA = collageA.boxCount();
                 for (var i = 0; i < boxCountA; i++) {
-//                    my$(collageA.getBox(i)).style.backgroundColor = "rgb" + "(" +
-//                            parseInt(Math.random() * 255) + ", "
-//                            + parseInt(Math.random() * 255) + ", "
-//                            + parseInt(Math.random() * 255) + ")";
                 }
-//                my$(collageA.getBox(Math.floor(Math.random() * boxCountA))).
-//                        style.backgroundImage = "none";
                 collageA.toggleBorder();
             }
-
+            
+            var textCloud = FW.makeTextCloud({
+            strings: "This this \"will\" show.\" Up delimited! AnD Normalized",
+            parentDiv: "cloudDiv"});
+            
 
 
         </script>

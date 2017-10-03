@@ -3,9 +3,11 @@ function my$(id) {
     return document.getElementById(id);
 }
 
-function Framework() {
-
+function createElement(parent){
     
+}
+
+function Framework() {
     var FW = {};
     FW.collageFW = function (params) {
         var newCollage = {};
@@ -119,13 +121,80 @@ function Framework() {
         return newCollage;
     };
     
-    FW.graphFW = function(params){
-        var newGraph = {};
-        var makeGraph = document.createElement('canvas');
+    FW.makeTextCloud = function(params){
+        var newTextCloud = {};
+        var splitStrings = params.strings.toLowerCase().split(" ");
+        var strLength = splitStrings.length;
+        var frequencyMap = new Map();
+
+        console.log("Before normalization: " + splitStrings);
+
+        normalizeString();
+        stringFrequency();
         
+        function removePunctuation(textString){
+            var modified = false;
+            if(textString.includes(".")){
+                modified = true;
+                textString =  textString.slice(0, textString.length - 1);
+            }
+            if(textString.includes(",")){
+                modified = true;
+                textString = textString.slice(0, textString.length - 1);
+                
+            }
+            if(textString.includes("\"")){
+                modified = true;
+                if(textString.charAt(0) === "\""){
+                    textString = textString.slice(1, textString.length - 1);
+                }
+                if(textString.charAt(textString.length-1) === "\""){
+                    textString = textString.slice(0, textString.length - 1);
+                }
+            }
+            if(textString.includes("!")){
+                modified = true;
+                textString = textString.slice(0, textString.length - 1);
+            }
+            if(modified){
+                return textString;
+            }
+            return null;
+        }
         
+        function normalizeString(){
+            for(var i = 0; i < strLength; i++){
+                splitStrings[i] = removePunctuation(splitStrings[i]) ||
+                                  splitStrings[i];
+            }
+            console.log("After normalization:" + splitStrings);
+        }
         
-        return newGraph;
+        newTextCloud.changeString = function(newString){
+            splitStrings = newString.toLowerCase().split(" ");
+            normalizeString();
+        };
+
+
+        function stringFrequency(){
+            for(var i = 0; i < strLength; i++){
+                frequencyMap.set(splitStrings[i], 0);
+            }
+            
+            for(var i = 0; i < strLength; i++){
+                frequencyMap.set(splitStrings[i],
+                    frequencyMap.get(splitStrings[i]) + 1);
+            }
+            
+            console.log(frequencyMap);
+            return null;
+        }
+        
+        newTextCloud.writeText = function(params){
+            
+        };
+        
+        return newTextCloud;
     };
     
     return FW;
