@@ -27,16 +27,27 @@ and open the template in the editor.
             mainDiv.style.height = "80vh";
             mainDiv.style.width = "80%";
             mainDiv.style.margin = "auto";
-            mainDiv.style.backgroundColor = "#496ba0";
+            mainDiv.style.backgroundColor = "white";
             mainDiv.style.lineHeight = "0px";
+            
+            var cloudDiv = my$("cloudDiv");
+            cloudDiv.style.borderStyle = "solid";
+            cloudDiv.style.borderWidth = "1px";
+            cloudDiv.style.backgroundColor = "white";
+            cloudDiv.style.padding = "10px";
+            cloudDiv.style.width = "80%";
+            cloudDiv.style.height = "5vh";
+            cloudDiv.style.margin = "auto";
+            cloudDiv.style.textAlign = "center";
+            
             var imageList = ["images", "more images later"];
 
 
 //            var collageDrawing = [[1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
 //                                  [1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
 //                                  [1, 1, 0, 0, 1, 1, 0, 0, 1, 1]];
-            var collageDrawing = [[1, 0],
-                                  [1, 0]];
+            var collageDrawing = [[1, 0,1],
+                                  [1, 0,1]];
 
 //            var imageList = ['imgA.gif', 'imgB.jpg', 'imgC.png',
 //                             'imgD.png', 'imgE.jpg', 'imgF.gif',
@@ -54,7 +65,7 @@ and open the template in the editor.
                 parent: mainDiv,
                 boxArray: collageDrawing,
                 imageNames: imageList,
-                rowLength: 2,
+                rowLength: 3,
                 colLength: 2
             });
             if (collageA !== null) {
@@ -67,9 +78,9 @@ and open the template in the editor.
             }
             
             var textCloud = FW.makeTextCloud({
-            strings: "This this \"will\" show.\" Up delimited! AnD Normalized",
+            strings: "This this \"will\" show\" Up delimited! AnD Normalized",
             parentDiv: "cloudDiv"});
-            
+            textCloud.writeText();
 
 
         </script>

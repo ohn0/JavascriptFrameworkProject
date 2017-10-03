@@ -126,12 +126,14 @@ function Framework() {
         var splitStrings = params.strings.toLowerCase().split(" ");
         var strLength = splitStrings.length;
         var frequencyMap = new Map();
+        var uniqueWords = [];
 
         console.log("Before normalization: " + splitStrings);
 
         normalizeString();
         stringFrequency();
-        
+        var textDiv = my$(params.parentDiv);
+
         function removePunctuation(textString){
             var modified = false;
             if(textString.includes(".")){
@@ -175,13 +177,15 @@ function Framework() {
             normalizeString();
         };
 
-
         function stringFrequency(){
             for(var i = 0; i < strLength; i++){
                 frequencyMap.set(splitStrings[i], 0);
             }
             
             for(var i = 0; i < strLength; i++){
+                if(frequencyMap.get(splitStrings[i]) === 0){
+                    uniqueWords.push(splitStrings[i]);
+                }
                 frequencyMap.set(splitStrings[i],
                     frequencyMap.get(splitStrings[i]) + 1);
             }
@@ -190,8 +194,16 @@ function Framework() {
             return null;
         }
         
+        function setSize(textVal){
+            textDiv.style.fontSize = 3 * (frequencyMap.get(textVal));
+        }
+        
         newTextCloud.writeText = function(params){
-            
+            for(var i = 0; i < uniqueWords.length; i++){
+                setSize(uniqueWords[i]);
+                textDiv.innerHTML += (uniqueWords[i] + " ");
+                textDiv.style.fontSize = "initial";
+            }
         };
         
         return newTextCloud;
