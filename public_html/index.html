@@ -22,7 +22,6 @@ and open the template in the editor.
         <script>
             "use strict";
 
-
             var mainDiv = my$("mainDIV");
             mainDiv.style.height = "80vh";
             mainDiv.style.width = "80%";
@@ -34,9 +33,8 @@ and open the template in the editor.
             cloudDiv.style.borderStyle = "solid";
             cloudDiv.style.borderWidth = "1px";
             cloudDiv.style.backgroundColor = "white";
-            cloudDiv.style.padding = "10px";
+//            cloudDiv.style.padding = "10px";
             cloudDiv.style.width = "80%";
-            cloudDiv.style.height = "5vh";
             cloudDiv.style.margin = "auto";
             cloudDiv.style.textAlign = "center";
             
@@ -77,8 +75,11 @@ and open the template in the editor.
                 collageA.toggleBorder();
             }
             
+            var bigString = "Fate/stay night (Japanese: フェイト/ステイナイト Hepburn: Feito/Sutei Naito) is a Japanese visual novel developed by Type-Moon, which was originally released as an adult game for Windows. A version of Fate/stay night rated for ages"+
+                    "15 and up titled Fate/stay night Réalta Nua (Irish for new stars), which features the Japanese voice actors from the anime series, was released for the PlayStation 2 and later for download on Windows as a trilogy covering the three main story lines. Réalta Nua is also ported to the PlayStation Vita. On October 28, 2005, Type-Moon released a sequel to Fate/stay night, titled Fate/hollow ataraxia. Its plot is set half a year after the events of Fate/stay night."
+            
             var textCloud = FW.makeTextCloud({
-            strings: "This this \"will\" show\" Up delimited! AnD Normalized",
+            strings: bigString,
             parentDiv: "cloudDiv"});
             textCloud.writeText();
 

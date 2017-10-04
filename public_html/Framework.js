@@ -194,15 +194,28 @@ function Framework() {
             return null;
         }
         
-        function setSize(textVal){
-            textDiv.style.fontSize = 3 * (frequencyMap.get(textVal));
+        function setSize(textSpan, textVal){
+            textSpan.style.color = "rgb(0," + (16 + (2*frequencyMap.get(textVal))) + ", " 
+                    + (30 * frequencyMap.get(textVal)) + ")";
+            textSpan.style.fontSize = (100 * (frequencyMap.get(textVal))) + "%";
         }
         
         newTextCloud.writeText = function(params){
+            var uniqueVals = [];
             for(var i = 0; i < uniqueWords.length; i++){
-                setSize(uniqueWords[i]);
-                textDiv.innerHTML += (uniqueWords[i] + " ");
-                textDiv.style.fontSize = "initial";
+                uniqueVals[i] = false;
+            }
+            var somePrime = 523;
+            for(var i = 0; i < uniqueWords.length; i++){
+                var newSpan = document.createElement("span");
+                //Access each array value by taking the product of the current 
+                //index with a prime and then modulo the length of the array.
+                //This will create a permutation of the text, OK, not a perfect
+                //permuatation, the first value still won't move.
+                newSpan.id = uniqueWords[(somePrime * i) % uniqueWords.length] + "SPAN";
+                textDiv.appendChild(newSpan);
+                setSize(newSpan, uniqueWords[(somePrime * i) % uniqueWords.length]);
+                newSpan.innerHTML += (uniqueWords[(somePrime * i) % uniqueWords.length] + " ");
             }
         };
         
