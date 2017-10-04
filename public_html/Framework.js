@@ -39,6 +39,8 @@ function Framework() {
         function makeDiv(params) {
             console.log("Making a new div!");
             var box = document.createElement("div");
+            var imageFile = imageNames[Math.floor(Math.random() * 
+                                                imageNames.length)];
             box.id = parentDIV.id + String(divCount);
             divCount++;
             box.style.height = boxHeight + "%";
@@ -54,16 +56,24 @@ function Framework() {
             box.style.top = params.divYlocation + "%";
             box.style.left = params.divXlocation + "%";
             box.style.width = params.width + "%";
-            box.style.backgroundImage = "url(" + imageNames[Math.floor
-                (Math.random() * imageNames.length)] + ")";
+            box.style.backgroundImage = "url(" + imageFile + ")";
             box.style.backgroundSize = "contain";
             box.style.backgroundRepeat = "no-repeat";
             box.style.backgroundPosition = "center center";
             parentDIV.appendChild(box);
             divList.push(String(box.id));
         }
+        
+        function setCallBacks(){
+            var children = parentDIV.childNodes;
+            console.log(children[i]);
+            for(var i = 0; i < children.length; i++){
+                children[i].onclick = params.callBack || 
+                    function(){alert(this.style.backgroundImage);};
+            }
+        }
 
-        newCollage.makeBoxes = function () {
+        function makeBoxes(){
             var divWidth = 0;
             var Xval = 0;
             var Yval = 0;
@@ -86,7 +96,7 @@ function Framework() {
                 }
             }
             return null;
-        };
+        }
 
         newCollage.listBoxes = function () {
             for (var i = 0; i < divCount; i++) {
@@ -118,6 +128,9 @@ function Framework() {
                 return null;
             }
         };
+        
+        makeBoxes();
+        setCallBacks();
         return newCollage;
     };
     
