@@ -66,7 +66,6 @@ function Framework() {
         
         function setCallBacks(){
             var children = parentDIV.childNodes;
-            console.log(children[i]);
             for(var i = 0; i < children.length; i++){
                 children[i].onclick = params.callBack || 
                     function(){alert(this.style.backgroundImage);};
@@ -210,7 +209,7 @@ function Framework() {
         function setSize(textSpan, textVal){
             textSpan.style.color = "rgb(0," + (16 + (2*frequencyMap.get(textVal))) + ", " 
                     + (30 * frequencyMap.get(textVal)) + ")";
-            textSpan.style.fontSize = (100 * (frequencyMap.get(textVal))) + "%";
+            textSpan.style.fontSize = (200 * (1 + Math.log(frequencyMap.get(textVal)))) + "%";
         }
         
         newTextCloud.writeText = function(params){
@@ -223,17 +222,16 @@ function Framework() {
                 var newSpan = document.createElement("span");
                 //Access each array value by taking the product of the current 
                 //index with a prime and then modulo the length of the array.
-                //This will create a permutation of the text, OK, not a perfect
-                //permuatation, the first value still won't move.
-                newSpan.id = uniqueWords[(somePrime * i) % uniqueWords.length] + "SPAN";
+                //This will create a permutation of the text, OK, not a complete 
+                //permutation as the first value will still not move. 
+                //Need to manually move the first value.
+                newSpan.id = uniqueWords[((somePrime * i) % (1 + uniqueWords.length))] + "SPAN";
                 textDiv.appendChild(newSpan);
-                setSize(newSpan, uniqueWords[(somePrime * i) % uniqueWords.length]);
-                newSpan.innerHTML += (uniqueWords[(somePrime * i) % uniqueWords.length] + " ");
+                setSize(newSpan, uniqueWords[((somePrime * i) % (1 + uniqueWords.length))]);
+                newSpan.innerHTML += (uniqueWords[((somePrime * i) % (1 + uniqueWords.length))] + " ");
             }
         };
-        
         return newTextCloud;
     };
-    
     return FW;
 }
