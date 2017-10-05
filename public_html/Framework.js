@@ -62,6 +62,8 @@ function Framework() {
             box.style.backgroundPosition = "center center";
             parentDIV.appendChild(box);
             divList.push(String(box.id));
+            
+            
         }
         
         function setCallBacks(){

@@ -27,7 +27,7 @@ and open the template in the editor.
             }
 
             var mainDiv = my$("mainDIV");
-            mainDiv.style.height = "80vh";
+            mainDiv.style.height = "10vh";
             mainDiv.style.width = "80%";
             mainDiv.style.margin = "auto";
             mainDiv.style.backgroundColor = "white";
@@ -35,6 +35,8 @@ and open the template in the editor.
             
             var cloudDiv = my$("cloudDiv");
             cloudDiv.style.borderStyle = "solid";
+            cloudDiv.style.position = "relative";
+            cloudDiv.style.top = "5vh";
             cloudDiv.style.borderWidth = "1px";
             cloudDiv.style.backgroundColor = "white";
             cloudDiv.style.width = "80%";
@@ -49,7 +51,8 @@ and open the template in the editor.
 //            var collageDrawing = [[1, 0,1],
 //                                  [1, 0,1]];
                               
-            var collageDrawing = [[1]];
+            var collageDrawing = [[0]];
+//            collageDrawing = null;
 
 //            var imageList = ['imgA.gif', 'imgB.jpg', 'imgC.png',
 //                             'imgD.png', 'imgE.jpg', 'imgF.gif',
@@ -68,7 +71,7 @@ and open the template in the editor.
                 boxArray: collageDrawing,
                 imageNames: imageList,
                 callBack: function(){
-                    alert("Some text.");
+                    alert(this.id);
                 },
                 rowLength: 1,
                 colLength: 1
@@ -81,9 +84,10 @@ and open the template in the editor.
                 collageA.toggleBorder();
             }
             
-//            var bigString = "Fate/stay night (Japanese: フェイト/ステイナイト Hepburn: Feito/Sutei Naito) is a Japanese visual novel developed by Type-Moon, which was originally released as an adult game for Windows. A version of Fate/stay night rated for ages"+
-//                    "15 and up titled Fate/stay night Réalta Nua (Irish for new stars), which features the Japanese voice actors from the anime series, was released for the PlayStation 2 and later for download on Windows as a trilogy covering the three main story lines. Réalta Nua is also ported to the PlayStation Vita. On October 28, 2005, Type-Moon released a sequel to Fate/stay night, titled Fate/hollow ataraxia. Its plot is set half a year after the events of Fate/stay night."
-            var bigString = "THIS THIS THIS some text.";
+            var bigString = "Fate/stay night  (Japanese: フェイト/ステイナイト Hepburn: Feito/Sutei Naito) is a Japanese visual novel developed by Type-Moon, which was originally released as an adult game for Windows. A version of Fate/stay night rated for ages"+
+                    "15 and up titled Fate/stay night Réalta Nua (Irish for new stars), which features the Japanese voice actors from the anime series, was released for the PlayStation 2 and later for download on Windows as a trilogy covering the three main story lines. Réalta Nua is also ported to the PlayStation Vita. On October 28, 2005, Type-Moon released a sequel to Fate/stay night, titled Fate/hollow ataraxia. Its plot is set half a year after the events of Fate/stay night."
+//            var bigString = " 1 a b b c c c d d d d e e e e e e e e e e e e.";
+            bigString = "In meteorology, a cloud is an aerosol comprising a visible mass of minute liquid droplets, frozen crystals, or particles suspended in the atmosphere above the surface of a planetary body.[1] The droplets and crystals may be made of water or various chemicals. On Earth, clouds are formed as a result of saturation of the air when it is cooled to its dew point, or when it gains sufficient moisture (usually in the form of water vapor) from an adjacent source to raise the dew point to the ambient temperature. They are seen in the Earth's homosphere (which includes the troposphere, stratosphere, and mesosphere). Nephology is the science of clouds which is undertaken in the cloud physics branch of meteorology."
             var textCloud = FW.makeTextCloud({
             strings: bigString,
             parentDiv: "cloudDiv"});
