@@ -3,13 +3,37 @@ function my$(id) {
     return document.getElementById(id);
 }
 
-function createElement(parent){
-    
-}
-
 function Framework() {
     var FW = {};
     FW.collageFW = function (params) {
+        //Returns a collection of divs that have images in them like
+        //a collage. The user will specify a 2D array of 1s and 0s
+        //as the collage diagram.
+        //Each row of the 2D array will correspond to a row in the collage.
+        //Specifying a group of 1s/0s will indicate the width of the div.
+        //The number of 1/0 groups will be the number of divs on that row.
+        //The size of each row is the width of the parent div.
+        //Example: A collage of 3 rows and 3 columns:
+        //                  [[0,0,1,1,0],
+        //                   [0,1,1,1,0],
+        //                   [1,1,1,1,1]]
+        //The first row will have 3 divs (00, 11, 0)
+        //The second row will also ahve 3 divs (0, 111, 0)
+        //The final row will have one wide div.
+        //Rows and colums don't have to be the same. 
+        //This will also work:
+        //                  [[0,0],
+        //                   [1,0],
+        //                   [0,0]]
+        //Each created div will also have an ID starting at 0 at the top left
+        //and increasing for each div to the right followed by each row.
+        //The indices of the top div will be:
+        //                   [[0],
+        //                   [1,2],
+        //                   [3]]
+        //These indices will be used to access each div individually.
+        
+        //Set default values
         var newCollage = {};
         var boxArray = params.boxArray;
         var parentDIV = params.parent;
@@ -24,6 +48,8 @@ function Framework() {
         var divList = [];
         console.log("Width of an individual box: " + boxWidth +
                 "\nHeight of an individual box: " + boxHeight);
+        
+        //Ensure the 2D array matches the dimensions the user specified..
         for (var i = 0; i < colLength; i++) {
             if (boxArray[i].length !== rowLength || boxArray.length !== colLength) {
                 alert("Number of rows/cols in array does not match " +
@@ -35,7 +61,10 @@ function Framework() {
         if (imageNames === null) {
             alert("No images attached.");
         }
-
+        
+        //Creates a div and adds it to the parent.
+        //Does a lot of styling.
+        //
         function makeDiv(params) {
             console.log("Making a new div!");
             var box = document.createElement("div");
@@ -62,18 +91,24 @@ function Framework() {
             box.style.backgroundPosition = "center center";
             parentDIV.appendChild(box);
             divList.push(String(box.id));
-            
-            
         }
-        
+
+        //Associate the callback method to each of the children.
+        //If no callback specified by the user, set a default.
+        //
         function setCallBacks(){
             var children = parentDIV.childNodes;
             for(var i = 0; i < children.length; i++){
                 children[i].onclick = params.callBack || 
-                    function(){alert(this.style.backgroundImage);};
-            }
+                    function(){alert("Default callback");};
+            }   
         }
 
+
+        //Figure out the widths and starting (X,Y) coordinates of each of the
+        //children. Once these values are found, call makeDiv with the found
+        //values.
+        //
         function makeBoxes(){
             var divWidth = 0;
             var Xval = 0;
@@ -98,13 +133,15 @@ function Framework() {
             }
             return null;
         }
-
+        
+        //List box names.
         newCollage.listBoxes = function () {
             for (var i = 0; i < divCount; i++) {
                 console.log(divList[i]);
             }
         };
 
+        //Turn the border on/off
         newCollage.toggleBorder = function() {
             for(var i = 0; i < divCount; i++){
                 if(my$(divList[i]).style.border !== "none"){
@@ -120,6 +157,8 @@ function Framework() {
             return divList.length;
         };
 
+        //Returns the box that the user wants based on the index. This 
+        //will let the user style/edit each div however they want.
         newCollage.getBox = function (boxIndex) {
             if (boxIndex < divList.length) {
                 return divList[boxIndex];
@@ -136,14 +175,26 @@ function Framework() {
     };
     
     FW.makeTextCloud = function(params){
+        //Creates a text cloud based on the string the user will specify.
+        //The string will first be converted to lowercase and have any common
+        //punctuation removed. The string will then be tokenized and each
+        //occurrence of each word will be recorded.
+        //The div will hold a collection of spans for each word(repeats removed).
+        //Each word's font size will be proportional to the number of times that
+        //word showed up in the string.
+        //
+        
+        //Initialize default values
         var newTextCloud = {};
         var splitStrings = params.strings.toLowerCase().split(" ");
         var strLength = splitStrings.length;
         var frequencyMap = new Map();
         var uniqueWords = [];
-
+        var constantMultiplier = 200;
         console.log("Before normalization: " + splitStrings);
 
+        //Remove punctuation from the string and store the occurrences of
+        //each word in a map.
         normalizeString();
         stringFrequency();
         var textDiv = my$(params.parentDiv);
@@ -158,8 +209,8 @@ function Framework() {
                 modified = true;
                 textString = textString.slice(0, textString.length - 1);
                 
-            }
-            if(textString.includes("\"")){
+            } 
+           if(textString.includes("\"")){
                 modified = true;
                 if(textString.charAt(0) === "\""){
                     textString = textString.slice(1, textString.length - 1);
@@ -178,6 +229,10 @@ function Framework() {
             return null;
         }
         
+        newTextCloud.setConstantMultipler = function(val){
+            constantMultiplier = val;
+        };
+        
         function normalizeString(){
             for(var i = 0; i < strLength; i++){
                 splitStrings[i] = removePunctuation(splitStrings[i]) ||
@@ -186,11 +241,13 @@ function Framework() {
             console.log("After normalization:" + splitStrings);
         }
         
+        //Change the string.
         newTextCloud.changeString = function(newString){
             splitStrings = newString.toLowerCase().split(" ");
             normalizeString();
         };
 
+        //Find the number of occurrences of each word in the string.
         function stringFrequency(){
             for(var i = 0; i < strLength; i++){
                 frequencyMap.set(splitStrings[i], 0);
@@ -208,29 +265,33 @@ function Framework() {
             return null;
         }
         
+        //Sets the size of the span's contents. Use the log so that the words don't
+        //get ridiculously big.
         function setSize(textSpan, textVal){
             textSpan.style.color = "rgb(0," + (16 + (2*frequencyMap.get(textVal))) + ", " 
                     + (30 * frequencyMap.get(textVal)) + ")";
-            textSpan.style.fontSize = (200 * (1 + Math.log(frequencyMap.get(textVal)))) + "%";
+            textSpan.style.fontSize = (constantMultiplier* (1+Math.log(frequencyMap.get(textVal)))) + "%";
         }
         
         newTextCloud.writeText = function(params){
+            //Write each word to a separate span so that the fontsize can vary
+            //between the words. Displays a permutation of the text to make
+            //the text cloud look more random. 
+            //The permutation is created by looping for the length of string
+            //and multiplying the i-value at each iteration by some prime and taking
+            //the modulo of that product with length of the string.
             var uniqueVals = [];
             for(var i = 0; i < uniqueWords.length; i++){
                 uniqueVals[i] = false;
             }
             var somePrime = 523;
+
             for(var i = 0; i < uniqueWords.length; i++){
                 var newSpan = document.createElement("span");
-                //Access each array value by taking the product of the current 
-                //index with a prime and then modulo the length of the array.
-                //This will create a permutation of the text, OK, not a complete 
-                //permutation as the first value will still not move. 
-                //Need to manually move the first value.
-                newSpan.id = uniqueWords[((somePrime * i) % (1 + uniqueWords.length))] + "SPAN";
+                newSpan.id = uniqueWords[((somePrime * i) % (uniqueWords.length))] + "SPAN";
                 textDiv.appendChild(newSpan);
-                setSize(newSpan, uniqueWords[((somePrime * i) % (1 + uniqueWords.length))]);
-                newSpan.innerHTML += (uniqueWords[((somePrime * i) % (1 + uniqueWords.length))] + " ");
+                setSize(newSpan, uniqueWords[((somePrime * i) % (uniqueWords.length))]);
+                newSpan.innerHTML += (uniqueWords[((somePrime * i) % (uniqueWords.length))] + " ");
             }
         };
         return newTextCloud;

@@ -10,14 +10,66 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
+            h1{
+                min-width: 100vh;
+                text-align: center;
+                padding: 10px;
+                margin:auto;
+            }
+            
+            p{
+                min-width: 100vh;
+                margin:auto;
+                padding: 10px;
+                font-size: 20px;
+                text-align: center;
+            }
+            
+            #mainDIV{
+                top: 5%;
+            }
+            
+            #mainDIVB{
+                top: 55%;
+            }
+            
+            #mainDIVC{
+                top: 95%;
+            }
+            
+            
             body{
-                background-color: black;
+                background-color: lightblue;
             }
         </style>
     </head>
     <body>
-        <div id="mainDIV"></div>
+        <h1> Framework testing </h1>
+        <p> This page showcases the two frameworks created. They are pretty simple
+            to use if you can find a use for them. 
+        <br/>
+            First is the collage, you can specify the size of the collage based
+            on the 2d array you pass to the framework.
+             Enjoy the pictures. My favorite is the bear on the motorcycle.
+            <br/>
+            You can customize the grid in the HTML as well as modify the callback
+            function, it currently just sets the background color to green.<br/>Here is a 2x2 collage.
+        </p>
+        <div id="mainDIV"></div><br/>
+        <p> 4x2 grid with the last 2 divs of the first row combined.</p>
+        <div id="mainDIVB"></div><br/>
+        <p> 10x3 grid with each image taking up 2 divs. </p>
+        <div id="mainDIVC"></div><br/>
+        <p> The next three divs display the textcloud framework, which returns a text cloud
+            based on the string that the user will input.<br/><br/>
+            Text:In meteorology, a cloud is an aerosol comprising a visible mass of minute liquid droplets, frozen crystals, or particles suspended in the atmosphere above the surface of a planetary body.[1] The droplets and crystals may be made of water or various chemicals. On Earth, clouds are formed as a result of saturation of the air when it is cooled to its dew point, or when it gains sufficient moisture (usually in the form of water vapor) from an adjacent source to raise the dew point to the ambient temperature. They are seen in the Earth's homosphere (which includes the troposphere, stratosphere, and mesosphere). Nephology is the science of clouds which is undertaken in the cloud physics branch of meteorology."
+        </p>
         <div id="cloudDiv"></div>
+        <br/>
+        <div id="cloudDivB"></div><br/><br/>
+        <p> Text: A tag cloud (word cloud, or weighted list in visual design) is a visual representation of text data, typically used to depict keyword metadata (tags) on websites, or to visualize free form text. Tags are usually single words, and the importance of each tag is shown with font size or color.[2] This format is useful for quickly perceiving the most prominent terms and for locating a term alphabetically to determine its relative prominence. When used as website navigation aids, the terms are hyperlinked to items associated with the tag."
+        </p>
+        <div id="cloudDivC"></div>
         <script src="Framework.js"></script>
         <script>
             "use strict";
@@ -27,11 +79,25 @@ and open the template in the editor.
             }
 
             var mainDiv = my$("mainDIV");
-            mainDiv.style.height = "10vh";
-            mainDiv.style.width = "80%";
+            mainDiv.style.height = "80vh";
+            mainDiv.style.width = "80vh";
             mainDiv.style.margin = "auto";
             mainDiv.style.backgroundColor = "white";
             mainDiv.style.lineHeight = "0px";
+            
+            var mainDivB= my$("mainDIVB");
+            mainDivB.style.height = "80vh";
+            mainDivB.style.width = "80vh";
+            mainDivB.style.margin = "auto";
+            mainDivB.style.backgroundColor = "white";
+            mainDivB.style.lineHeight = "0px";
+            
+            var mainDivC = my$("mainDIVC");
+            mainDivC.style.height = "80vh";
+            mainDivC.style.width = "80vh";
+            mainDivC.style.margin = "auto";
+            mainDivC.style.backgroundColor = "red";
+            mainDivC.style.lineHeight = "0px";
             
             var cloudDiv = my$("cloudDiv");
             cloudDiv.style.borderStyle = "solid";
@@ -43,57 +109,114 @@ and open the template in the editor.
             cloudDiv.style.margin = "auto";
             cloudDiv.style.textAlign = "center";
             
-
-
-//            var collageDrawing = [[1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
-//                                  [1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
-//                                  [1, 1, 0, 0, 1, 1, 0, 0, 1, 1]];
-//            var collageDrawing = [[1, 0,1],
-//                                  [1, 0,1]];
+            var cloudDivB = my$("cloudDivB");
+            cloudDivB.style.borderStyle = "solid";
+            cloudDivB.style.position = "relative";
+            cloudDivB.style.top = "5vh";
+            cloudDivB.style.borderWidth = "1px";
+            cloudDivB.style.backgroundColor = "white";
+            cloudDivB.style.width = "80%";
+            cloudDivB.style.margin = "auto";
+            cloudDivB.style.textAlign = "center";
+            
+            var cloudDivC = my$("cloudDivC");
+            cloudDivC.style.borderStyle = "solid";
+            cloudDivC.style.position = "relative";
+            cloudDivC.style.top = "5vh";
+            cloudDivC.style.borderWidth = "1px";
+            cloudDivC.style.backgroundColor = "white";
+            cloudDivC.style.width = "80%";
+            cloudDivC.style.margin = "auto";
+            cloudDivC.style.textAlign = "center";
+            
+            
+        //MODIFY THESE 2D ARRAYS TO CHANGE HOW THE COLLAGE WILL LOOK                              
+            var collageDrawing = [[0,1],
+                                  [1,0]];
                               
-            var collageDrawing = [[0]];
-//            collageDrawing = null;
+            var collageDrawingB = [[1, 0,1,1],
+                                   [1, 0,1,0]];
+                               
+            var collageDrawingC = [[1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
+                                  [1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
+                                  [1, 1, 0, 0, 1, 1, 0, 0, 1, 1]];
 
-//            var imageList = ['imgA.gif', 'imgB.jpg', 'imgC.png',
-//                             'imgD.png', 'imgE.jpg', 'imgF.gif',
-//                             'imgG.png', 'imgH.jpg', 'imgI.jpg',
-//                             'imgJ.png', 'imgK.jpg', 'imgL.gif',
-            var imageList = ['1430852764165.png', '1430947707287.gif',
+            var imageList = ['imgB.jpg', 'imgC.png',
+                             'imgD.png',  'imgF.gif', '1429753371089.png',
+                             'imgG.png', 'imgH.jpg', 'imgI.jpg',
+                             '1430852764165.png', '1430947707287.gif',
                              '1431140273524.png', '1432921371002.jpg',
                              '1443593809949.png', '1443597085619.jpg',
-                             '1436311959052.gif', '1434898470451.jpg'];
+                             '1436311959052.gif', '1434898470451.jpg',
+                             '1438992845963.jpg', '1406285047621.gif',
+                             '1397543724194.jpg', '1413409530669.jpg',
+                             '1411749228413.jpg', '1433894893681.gif'
+                              ];
             for (var i = 0; i < imageList.length; i++) {
                 imageList[i] = "pics/" + imageList[i];
             }
+            
+            
             var FW = Framework();
             var collageA = FW.collageFW({
                 parent: mainDiv,
                 boxArray: collageDrawing,
                 imageNames: imageList,
                 callBack: function(){
-                    alert(this.id);
+                    this.style.backgroundColor = "lightgreen";
                 },
-                rowLength: 1,
-                colLength: 1
+                rowLength: 2,
+                colLength: 2
             });
-            if (collageA !== null) {
-                collageA.listBoxes();
-                var boxCountA = collageA.boxCount();
-                for (var i = 0; i < boxCountA; i++) {
-                }
-                collageA.toggleBorder();
-            }
             
-            var bigString = "Fate/stay night  (Japanese: フェイト/ステイナイト Hepburn: Feito/Sutei Naito) is a Japanese visual novel developed by Type-Moon, which was originally released as an adult game for Windows. A version of Fate/stay night rated for ages"+
-                    "15 and up titled Fate/stay night Réalta Nua (Irish for new stars), which features the Japanese voice actors from the anime series, was released for the PlayStation 2 and later for download on Windows as a trilogy covering the three main story lines. Réalta Nua is also ported to the PlayStation Vita. On October 28, 2005, Type-Moon released a sequel to Fate/stay night, titled Fate/hollow ataraxia. Its plot is set half a year after the events of Fate/stay night."
-//            var bigString = " 1 a b b c c c d d d d e e e e e e e e e e e e.";
-            bigString = "In meteorology, a cloud is an aerosol comprising a visible mass of minute liquid droplets, frozen crystals, or particles suspended in the atmosphere above the surface of a planetary body.[1] The droplets and crystals may be made of water or various chemicals. On Earth, clouds are formed as a result of saturation of the air when it is cooled to its dew point, or when it gains sufficient moisture (usually in the form of water vapor) from an adjacent source to raise the dew point to the ambient temperature. They are seen in the Earth's homosphere (which includes the troposphere, stratosphere, and mesosphere). Nephology is the science of clouds which is undertaken in the cloud physics branch of meteorology."
+            if(collageA === null){alert("Error creating collage.");}
+            collageA.listBoxes();
+            var boxCountA = collageA.boxCount();
+            for (var i = 0; i < boxCountA; i++) {
+            }
+            collageA.toggleBorder();
+            
+            var collageB = FW.collageFW({
+                parent: mainDivB,
+                boxArray: collageDrawingB,
+                imageNames: imageList,
+                callBack: function(){
+                    this.style.backgroundColor = "lightgreen";
+                },
+                rowLength: 4,
+                colLength: 2
+            });
+            
+            if(collageB === null){alert("Error creating collage.");}
+            collageB.listBoxes();
+            var collageC = FW.collageFW({
+                parent: mainDivC,
+                boxArray: collageDrawingC,
+                imageNames: imageList,
+                callBack: function(){
+                    this.style.backgroundColor = "lightgreen";
+                },
+                rowLength: 10,
+                colLength: 3    
+            });
+            
+            var bigString = "In meteorology, a cloud is an aerosol comprising a visible mass of minute liquid droplets, frozen crystals, or particles suspended in the atmosphere above the surface of a planetary body.[1] The droplets and crystals may be made of water or various chemicals. On Earth, clouds are formed as a result of saturation of the air when it is cooled to its dew point, or when it gains sufficient moisture (usually in the form of water vapor) from an adjacent source to raise the dew point to the ambient temperature. They are seen in the Earth's homosphere (which includes the troposphere, stratosphere, and mesosphere). Nephology is the science of clouds which is undertaken in the cloud physics branch of meteorology.";
+            var bigStringB = " 1 a b b c c c d d d d e e e e e e e e e e e e.";
+            var bigStringC = "A tag cloud (word cloud, or weighted list in visual design) is a visual representation of text data, typically used to depict keyword metadata (tags) on websites, or to visualize free form text. Tags are usually single words, and the importance of each tag is shown with font size or color.[2] This format is useful for quickly perceiving the most prominent terms and for locating a term alphabetically to determine its relative prominence. When used as website navigation aids, the terms are hyperlinked to items associated with the tag."
             var textCloud = FW.makeTextCloud({
             strings: bigString,
             parentDiv: "cloudDiv"});
             textCloud.writeText();
 
-
+            var textCloudB = FW.makeTextCloud({
+            strings: bigStringB,
+            parentDiv: "cloudDivB"});
+            textCloudB.writeText();
+            
+            var textCloudC = FW.makeTextCloud({
+            strings: bigStringC,
+            parentDiv: "cloudDivC"});
+            textCloudC.writeText();
         </script>
     </body>
 </html>
